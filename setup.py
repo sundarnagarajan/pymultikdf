@@ -44,7 +44,7 @@ PACKAGE DATA
 '''
 # You _SHOULD_ set these
 name = 'multikdf'
-version = open('gitver.txt', 'r').read().splitlines()[0]
+version = open('ver.txt', 'r').read().splitlines()[0]
 description = name
 install_requires = [
     'cffi_utils',
