@@ -99,6 +99,63 @@ Exactly and ONLY the following C functions have been wrapped
 # Test code
   See multikdf.test (test.py under the multikdf module directory)
 
+    import os
+    from .fastpbkdf2 import pbkdf2, algorithm as hash_algorithms
+    from .bcrypt import bcrypt_kdf
+    from .scrypt import scrypt_kdf
+
+    min_passwd_len = 8
+    max_passwd_len = 10
+
+    min_pbkdf_rounds = 1000
+    max_pbkdf_rounds = 5000
+    step_pbkdf_rounds = 200
+
+    min_bcrypt_rounds = 2
+    max_bcrypt_rounds = 8
+
+    min_scrypt_r = 7
+    max_scrypt_r = 8
+    min_scrypt_p = 1
+    max_scrypt_p = 2
+    min_scrypt_n = 13
+    max_scrypt_n = 14
+
+    def test_pbkdf2(s):
+        for l in range(min_passwd_len, max_passwd_len + 1):
+            i = os.urandom(l)
+            for r in range(min_pbkdf_rounds,
+                           max_pbkdf_rounds + 1,
+                           step_pbkdf_rounds):
+                for h in hash_algorithms.keys():
+                    print('Testing pbkdf2: l=%d, r=%d, h=%s' % (l, r, h))
+                    pbkdf2(i, s, r=r, kl=kl, h=h)
+
+    def test_bcrypt(s):
+        for l in range(min_passwd_len, max_passwd_len + 1):
+            i = os.urandom(l)
+            for r in range(min_bcrypt_rounds, max_bcrypt_rounds + 1):
+                print('Testing bcrypt: l=%d, r=%d' % (l, r))
+                bcrypt_kdf(i, s, r=r, kl=kl)
+
+    def test_scrypt(s):
+        for l in range(min_passwd_len, max_passwd_len + 1):
+            i = os.urandom(l)
+            for r in range(min_scrypt_r, max_scrypt_r + 1):
+                for p in range(min_scrypt_p, max_scrypt_p + 1):
+                    for n in range(min_scrypt_n, max_scrypt_n + 1):
+                        print('Testing scrypt: l=%d, r=%d, p=%d, n=%d' % (
+                            l, r, p, n))
+                        scrypt_kdf(i, s, r=r, p=p, n=n, kl=kl)
+
+    s = os.urandom(64)
+    kl = 64
+
+    test_pbkdf2(s)
+    test_bcrypt(s)
+    test_scrypt(s)
+
+
 # INSTALLING:
   From github directly using pip:
     pip install 'git+https://github.com/sundarnagarajan/pymultikdf.git'
