@@ -44,7 +44,7 @@ PACKAGE DATA
 '''
 # You _SHOULD_ set these
 name = 'multikdf'
-version = '0.01'
+version = '0.01.1'
 description = name
 install_requires = [
     'cffi_utils',
