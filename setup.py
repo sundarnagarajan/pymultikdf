@@ -44,7 +44,7 @@ PACKAGE DATA
 '''
 # You _SHOULD_ set these
 name = 'multikdf'
-version = '0.01.2'
+version = open('gitver.txt', 'r').read()
 description = name
 install_requires = [
     'cffi_utils',
@@ -57,7 +57,7 @@ license = ('License :: OSI Approved :: '
 # The following are optional
 long_description = open('README.rst').read()
 url = 'https://github.com/sundarnagarajan/pymultikdf'
-download_url = 'https://github.com/sundarnagarajan/pymultikdf.git'
+download_url = '%s/tree/%s' % (url, version)
 author = 'Sundar Nagarajan'
 # author_email = ''
 maintainer = author
