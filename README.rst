@@ -135,3 +135,93 @@ Exactly and ONLY the following C functions have been wrapped
 
     See the file LICENSE-GPLv3.txt for details of the GNU General Public
     License version 3.
+
+
+
+# Documentation (pydoc)
+
+## Package multikdf
+### PACKAGE CONTENTS
+    bcrypt
+    fastpbkdf2
+    libmultikdf
+    scrypt
+    test
+
+### FUNCTIONS
+    getbuf(l)
+
+## multikdf.fastpbkdf2
+
+### FUNCTIONS
+    pbkdf2(i, s, r=1000, kl=64, h='SHA512')
+        i-->bytes: input data (password etc)
+        s-->bytes: salt
+        r-->int: rounds
+        kl-->int: desired key length in bytes
+        h-->str: hash function (name)
+        
+        Returns-->bytes:
+    
+    pbkdf2_hmac(h, i, s, r, kl=None)
+        Should be identical to original fastpbkdf2.pbkdf2_hmac
+        h-->str: hash function (name)
+        i-->bytes: input data (password etc)
+        s-->bytes: salt
+        r-->int: rounds
+        kl-->int: desired key length in bytes
+        
+        Returns-->bytes:
+
+### DATA
+    algorithm = {'sha1': None, 'sha256': None, 'sha512': None}
+
+
+## multikdf.bcrypt
+
+### FUNCTIONS
+    bcrypt_kdf(i, s, r=10, kl=64)
+        i-->bytes: input data (password etc)
+        s-->bytes: salt (os.urandom)
+        r-->int: rounds
+        kl-->int: desired key length in bytes
+        Returns-->bytes:
+        
+        (rounds * PerSec) = Machine-specific constant
+    
+    kdf(password, salt, desired_key_bytes, rounds)
+        Should be identical to original bcrypt.kdf
+        password-->bytes: input data (password etc)
+        salt-->bytes: salt
+        desired_key_bytes-->int: desired key length in bytes
+        rounds-->int: rounds
+        
+        Returns-->bytes:
+
+## multikdf.scrypt
+
+### FUNCTIONS
+    hash(i, s, N=16384, r=8, p=1, buflen=64)
+        Should be identical to scrypt.hash
+        i-->bytes: input data (password etc)
+        s-->bytes: salt
+        N-->int: General work factor. Should be a power of 2
+                 if N < 2, it is set to 2. Defaults to 16384
+        r-->int: Memory cost - defaults to 8
+        p-->int: Compuation (parallelization) cost - defaults to 1
+        buflen-->int: Desired key length in bytes
+        Returns-->bytes:
+    
+    scrypt_kdf(i, s, r=8, p=1, n=14, kl=64)
+        i-->bytes: input data (password etc)
+        s-->bytes: salt (os.urandom)
+        r-->int: Memory cost - defaults to 8
+        p-->int: Compuation (parallelization) cost - defaults to 1
+        n-->int: General work factor. passed to scrypt as 2^n
+                 if n < 1, it is set to 1. Defaults to 14 (scrypt n=16384)
+        Returns-->bytes:
+        
+        (r * p) should be < 2^30
+        see pydoc scrypt.hash
+        
+        (2^n) * r * p * PerSec = Machine-specific constant
