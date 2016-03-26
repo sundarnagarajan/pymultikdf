@@ -93,18 +93,26 @@ Are there any differences?
 
 | Exactly and ONLY the following C functions have been wrapped
 |  From fastpbkdf2:
-|  fastpbkdf2\_hmac\_sha1
-|  fastpbkdf2\_hmac\_sha256
-|  fastpbkdf2\_hmac\_sha512
-|  From bcrypt:
-|  bcrypt\_kdf
-|  From scrypt:
-|  crypto\_scrypt
 
 ::
 
-    The following methods should be exactly equivalent to the corresponding
-    methods in the existing python wrappers:
+            fastpbkdf2_hmac_sha1
+            fastpbkdf2_hmac_sha256
+            fastpbkdf2_hmac_sha512
+
+        From bcrypt:
+
+            bcrypt_kdf
+
+        From scrypt:
+
+            crypto_scrypt
+
+The following methods should be exactly equivalent to the corresponding
+methods in the existing python wrappers:
+
+::
+
         ---------------------------------------------------------------
         Module.method                       Identical to
         ---------------------------------------------------------------
