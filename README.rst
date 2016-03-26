@@ -192,14 +192,23 @@ See multikdf.test (test.py under the multikdf module directory)
 INSTALLING:
 ===========
 
-| From github directly using pip:
-|  pip install 'git+https://github.com/sundarnagarajan/pymultikdf.git'
+From github directly using pip:
 
-| From github after downloading / cloning:
-|  python setup.py install
+::
 
-| From pypi:
-|  pip install multikdf
+    pip install 'git+https://github.com/sundarnagarajan/pymultikdf.git'
+
+From github after downloading / cloning:
+
+::
+
+    python setup.py install
+
+From pypi:
+
+::
+
+    pip install multikdf
 
 LICENSE
 =======

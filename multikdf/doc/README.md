@@ -129,12 +129,15 @@ The following methods should be exactly equivalent to the corresponding methods 
 
 # INSTALLING:
   From github directly using pip:
+
     pip install 'git+https://github.com/sundarnagarajan/pymultikdf.git'
 
   From github after downloading / cloning:
+
     python setup.py install
 
   From pypi:
+
     pip install multikdf
 
 # LICENSE
