@@ -40,19 +40,20 @@ This may also be a convenience when porting your code to run under 'Python For A
 
 ## Are there any differences?
 Exactly and ONLY the following C functions have been wrapped
-        From fastpbkdf2:
 
-            fastpbkdf2_hmac_sha1
-            fastpbkdf2_hmac_sha256
-            fastpbkdf2_hmac_sha512
+From fastpbkdf2:
 
-        From bcrypt:
+    fastpbkdf2_hmac_sha1
+    fastpbkdf2_hmac_sha256
+    fastpbkdf2_hmac_sha512
 
-            bcrypt_kdf
+From bcrypt:
 
-        From scrypt:
+    bcrypt_kdf
 
-            crypto_scrypt
+From scrypt:
+
+    crypto_scrypt
 
 The following methods should be exactly equivalent to the corresponding methods in the existing python wrappers:
 
