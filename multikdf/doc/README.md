@@ -1,5 +1,4 @@
 # pymultikdf
-
 This python module provides wrappers for C functions implementing the
 following Key Derivation Functions (KDF)s:
   - PBKDF2
@@ -18,7 +17,6 @@ into a symmetric key for use with AES. Keyed cryptographic hash functions are
 popular examples of pseudo-random functions used for key derivation.
 
 ### What is PBKDF2?
-
 PBKDF2 (Password-Based Key Derivation Function 2) is a key derivation function
 that is part of RSA Laboratories' Public-Key Cryptography Standards (PKCS)
 series, specifically PKCS #5 v2.0, also published as Internet Engineering Task
@@ -28,7 +26,6 @@ produce derived keys up to 160 bits long.
 See: https://en.wikipedia.org/wiki/PBKDF2
 
 ### What is bcrypt?
-
 bcrypt is a key derivation function for passwords designed by Niels Provos and
 David Mazières, based on the Blowfish cipher, and presented at USENIX in
 1999.[1] Besides incorporating a salt to protect against rainbow table attacks,
@@ -48,7 +45,6 @@ iteration count as a power of two, which is an input to the crypt algorithm.
 See: https://en.wikipedia.org/wiki/Bcrypt
 
 ### What is scrypt?
-
 In cryptography, scrypt is a password-based key derivation function created by
 Colin Percival, originally for the Tarsnap online backup service.[1] The
 algorithm was specifically designed to make it costly to perform large-scale
@@ -59,14 +55,12 @@ an informational RFC.[2]
 See: https://en.wikipedia.org/wiki/Scrypt
 
 # Relationship to existing packages
-
 Existing python packages for PBKDF2, bcrypt, scrypt
   - pip install fastpbkdf2
   - pip install bcrypt
   - pip install scrypt
 
 ## Why a new module?
-
 Sometimes one wants to try or use MULTIPLE different Key Derivation Functions.
 In such cases, instead of installing MULTIPLE SEPARATE python, packages, just
 this single module can be installed and used.
@@ -75,7 +69,6 @@ This may also be a convenience when porting your code to run under 'Python For
 Android (https://github.com/kivy/python-for-android)
 
 ## Are there any differences?
-
 Exactly and ONLY the following C functions have been wrapped
         From fastpbkdf2:
             fastpbkdf2_hmac_sha1
@@ -99,6 +92,7 @@ Exactly and ONLY the following C functions have been wrapped
 # Test code
   See multikdf.test (test.py under the multikdf module directory)
 
+~~~~ {.sourceCode .python}
     import os
     from .fastpbkdf2 import pbkdf2, algorithm as hash_algorithms
     from .bcrypt import bcrypt_kdf
@@ -154,6 +148,7 @@ Exactly and ONLY the following C functions have been wrapped
     test_pbkdf2(s)
     test_bcrypt(s)
     test_scrypt(s)
+~~~~
 
 
 # INSTALLING:
@@ -167,31 +162,30 @@ Exactly and ONLY the following C functions have been wrapped
     pip install multikdf
 
 # LICENSE
+The files under multikdf/c/fastpbkdf2 are from ctz and are copied
+unchanged from https://github.com/ctz/fastpbkdf2.git
+These files under the terms of the CC0 1.0 Universal License - see
+the file named LICENSE under multikdf/c/fastpbkdf2
 
-    The files under multikdf/c/fastpbkdf2 are from ctz and are copied
-    unchanged from https://github.com/ctz/fastpbkdf2.git
-    These files under the terms of the CC0 1.0 Universal License - see
-    the file named LICENSE under multikdf/c/fastpbkdf2
+The files under multikdf/c/py-bcrypt are from py-bcrypt (automatically
+exported from code.google.com/p/py-bcrypt) and imported unchanged.
+These files under the terms of the ISC/BSD licence. See the file named
+LICENSE under multikdf/c/py-bcrypt
 
-    The files under multikdf/c/py-bcrypt are from py-bcrypt (automatically
-    exported from code.google.com/p/py-bcrypt) and imported unchanged.
-    These files under the terms of the ISC/BSD licence. See the file named
-    LICENSE under multikdf/c/py-bcrypt
+The files under multikdf/c/scrypt are from Tarsnap and are copied
+unchanged from https://github.com/Tarsnap/scrypt.git
+The files under multikdf/c/scrypt/lib are licensed under the terms of
+the 2-clause BSD license. See the file named README.md under the directory
+multikdf/c/scrypt/lib.
+The files under multikdf/c/scrypt/libcperciva are licensed under the
+terms of the license specified in the file
+multikdf/c/scrypt/libcperciva/COPYRIGHT.
 
-    The files under multikdf/c/scrypt are from Tarsnap and are copied
-    unchanged from https://github.com/Tarsnap/scrypt.git
-    The files under multikdf/c/scrypt/lib are licensed under the terms of
-    the 2-clause BSD license. See the file named README.md under the directory
-    multikdf/c/scrypt/lib.
-    The files under multikdf/c/scrypt/libcperciva are licensed under the
-    terms of the license specified in the file
-    multikdf/c/scrypt/libcperciva/COPYRIGHT.
+All remaining files in this package are licensed under the GNU
+General Public License version 3 or (at your option) any later version.
 
-    All remaining files in this package are licensed under the GNU
-    General Public License version 3 or (at your option) any later version.
-
-    See the file LICENSE-GPLv3.txt for details of the GNU General Public
-    License version 3.
+See the file LICENSE-GPLv3.txt for details of the GNU General Public
+License version 3.
 
 
 

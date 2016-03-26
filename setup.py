@@ -57,7 +57,10 @@ license = ('License :: OSI Approved :: '
            )
 
 # The following are optional
-long_description = open('README.rst').read()
+try:
+    long_description = open('README.rst').read()
+except:
+    long_description = description
 author = 'Sundar Nagarajan'
 # author_email = ''
 maintainer = author
