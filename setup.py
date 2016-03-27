@@ -44,7 +44,7 @@ PACKAGE DATA
 '''
 # You _SHOULD_ set these
 name = 'multikdf'
-version = '0.01.30'   # oldver: '0.01.29'
+version = '0.01.31'   # oldver: '0.01.30'
 url = 'https://github.com/sundarnagarajan/pymultikdf'
 download_url = '%s/tree/%s' % (url, version)
 description = name
