@@ -30,8 +30,9 @@
 import sys
 import os
 from setuptools import setup, find_packages, Extension
-# Import setupext IFF you use prep_cmd or want custom triggers
-import setupext
+# Import setupext ONLY if you want custom triggers
+# If you only use prep_cmd, you only need to include setupext in the package
+# import setupext
 
 
 os.chdir(os.path.dirname(sys.argv[0]) or ".")
@@ -76,8 +77,11 @@ zip_safe = True
 '''
 ==============================================================================
 C EXTENSION DETAILS
-C source files are in a directory under the python module, so that the
-C files are also installed with the python module
+C source files are NOT under the python module, so that the
+C files are NOT installed with the python module
+
+Add c_dir to MANIFEST.in as graft
+Add any dir with prep scripts to MANIFEST.in as graft
 ==============================================================================
 '''
 c_dir = 'c'
@@ -163,6 +167,7 @@ def prepare_c_source(cmd):
     '''
     cmd-->str: command with arguments
     '''
+    import setupext
     setupext.config['build_ext']['pre']['cmdlist'] = [cmd]
     return setupext.get_cmdclass()
 
