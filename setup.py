@@ -30,8 +30,7 @@
 import sys
 import os
 from setuptools import setup, find_packages, Extension
-from distutils.util import get_platform
-# import setupext ONLY if you need triggers for installation steps
+# Import setupext IFF you use prep_cmd or want custom triggers
 import setupext
 
 
@@ -96,12 +95,15 @@ c_src_files = [
     'fastpbkdf2/fastpbkdf2.c',
 ]
 libpath = os.path.join(name, libname)
-c_src_list = [os.path.join(name, c_dir, x) for x in c_src_files]
+c_src_list = [os.path.join(c_dir, x) for x in c_src_files]
+# ext_modules should be a LIST of dict - each dict is a
+# set of keywords that define ONE extension. For a SINGLE extension
+# ext_modules should be a LIST with a SINGLE dict
 ext_modules = [
-    Extension(
+    dict(
         name=libpath,
         sources=c_src_list,
-        include_dirs=[os.path.join(name, c_dir, x) for x in [
+        include_dirs=[os.path.join(c_dir, x) for x in [
             'scrypt',
             'scrypt/libcperciva/alg',
             'scrypt/libcperciva/cpusupport',
@@ -120,33 +122,26 @@ ext_modules = [
 '''
 ==============================================================================
 ADDITIONAL DATA FILES
----------------------
 ==============================================================================
 '''
 
 data_dirs = [
     'doc',
-    c_dir,
-    'build',
 ]
 
 
 '''
 ==============================================================================
 CUSTOM STEPS
+To just execute a (shell) script to prepare C sources, call
+set prep_cmd = STRING containing command with all args
+Typically you will pass c_dir as a single argument to allow script to
+cd c_dir and then execute prep steps
+
+prepare_c_source will automatically set setupext.config and cmdclass
 ==============================================================================
 '''
-build_c_dir = 'build/lib.%s-%s/%s/%s' % (
-    get_platform(),
-    '%d.%d' % sys.version_info[:2],
-    name,
-    c_dir
-)
-build_sh = os.path.join(name, 'build/build.sh')
-
-setupext.config['build_ext']['pre']['cmdlist'] = [
-    build_sh + ' ' + build_c_dir,
-]
+prep_cmd = os.path.join('prep/build.sh') + ' ' + c_dir
 
 '''
 ==============================================================================
@@ -154,8 +149,6 @@ ADDITIONAL keyword args to setup() - shouldn't be required, normally
 ==============================================================================
 '''
 ADDL_KWARGS = dict(
-    # To support custom step triggers
-    cmdclass=setupext.get_cmdclass()
 )
 
 
@@ -164,6 +157,14 @@ ADDL_KWARGS = dict(
            DO NOT CHANGE ANYTHING BELOW THIS
 ==============================================================================
 '''
+
+
+def prepare_c_source(cmd):
+    '''
+    cmd-->str: command with arguments
+    '''
+    setupext.config['build_ext']['pre']['cmdlist'] = [cmd]
+    return setupext.get_cmdclass()
 
 
 def get_longdesc(default=''):
@@ -220,7 +221,7 @@ long_description = get_longdesc(description)
 known_keywords = [
     'name', 'version', 'packages', 'description', 'license',
     'install_requires', 'requires', 'setup_requires',
-    'ext_modules', 'package_dir', 'package_data',
+    'package_dir', 'package_data',
     'zip_safe', 'classifiers', 'keywords',
     'long_description', 'url', 'download_url',
     'author', 'author_email', 'maintainer', 'maintainer_email',
@@ -231,8 +232,15 @@ for k in known_keywords:
     if k in locals():
         kwdict[k] = locals()[k]
 
+if 'prep_cmd' in locals():
+    kwdict['cmdclass'] = prepare_c_source(locals()['prep_cmd'])
+
+# Do not compile ext_modules during build phase - wasteful
+if len(sys.argv) > 1 and sys.argv[1] != 'build':
+    if 'ext_modules' in locals():
+        kwdict['ext_modules'] = [Extension(**x) for x in
+                                 locals()['ext_modules']]
+
 # Additional keywords specified by user - shouldn't be required, normally
 kwdict.update(ADDL_KWARGS)
-
-
 setup(**kwdict)
