@@ -16,7 +16,7 @@
         ---------------------------------------------------------------
 '''
 from . import lib, ffi, getbuf
-from cffi_utils.utils2to3 import toBytes
+from cffi_utils.py2to3 import toBytes
 
 
 algorithm = dict.fromkeys(['sha1', 'sha256', 'sha512'])
